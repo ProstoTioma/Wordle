@@ -49,18 +49,20 @@ class Game:
 
                                 self.letters.append([event.unicode.upper(), letter_rect])
                                 self.index += 1
-                                # print(self.letters[self.index - 1][0])
 
                     if event.key == pygame.K_BACKSPACE:
                         if self.index > 0 and self.index > (5 * (self.row_ind - 1)):
                             self.letters[self.index - 1][0] = '    '
                             self.index -= 1
-                            # print(self.letters[self.index - 1][0])
 
                     if event.key == pygame.K_RETURN and len(self.letters) == 5 * self.row_ind:
-                        self.check_word()
-                        self.row_ind += 1
-                        # self.letters.clear()
+                        l = map(lambda x: x[0], self.letters)
+                        s = ''
+                        for c in l:
+                            s += c
+                        if s.lower() in open("data", encoding='utf8').read().split('\n'):
+                            self.check_word()
+                            self.row_ind += 1
 
             pygame.display.flip()
 
