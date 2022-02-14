@@ -56,7 +56,7 @@ class Game:
                             self.index -= 1
 
                     if event.key == pygame.K_RETURN and len(self.letters) == 5 * self.row_ind:
-                        l = map(lambda x: x[0], self.letters)
+                        l = map(lambda x: x[0], self.letters[-5:])
                         s = ''
                         for c in l:
                             s += c
@@ -77,9 +77,9 @@ class Game:
         for i in range(5):
             if self.letters[i + 5 * (self.row_ind - 1)][0] == self.word[i].upper():
                 rect = self.screen.field_squares[i + 5 * (self.row_ind - 1)]
-                pygame.draw.rect(self.screen.screen, (0, 255, 0), rect, 1)
+                pygame.draw.rect(self.screen.screen, (0, 255, 0), rect, 2, 50)
                 pygame.display.flip()
             elif self.letters[i + 5 * (self.row_ind - 1)][0] in self.word.upper():
                 rect = self.screen.field_squares[i + 5 * (self.row_ind - 1)]
-                pygame.draw.rect(self.screen.screen, (220, 197, 31), rect, 1)
+                pygame.draw.rect(self.screen.screen, (220, 197, 31), rect, 2, 50)
                 pygame.display.flip()

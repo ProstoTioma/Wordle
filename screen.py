@@ -29,7 +29,7 @@ class Screen:
             for j in range(self.n_sq):
                 rect = pygame.Rect(self.sq_size * j, self.sq_size * i, self.sq_size, self.sq_size)
                 self.field_squares.append(rect)
-                pygame.draw.rect(self.screen, self.border_color, rect, 1)
+                pygame.draw.rect(self.screen, self.border_color, rect, 2, 50)
                 pygame.display.flip()
 
 
