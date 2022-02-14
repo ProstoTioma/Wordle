@@ -6,10 +6,10 @@ import random
 class Game:
     def __init__(self):
         self.screen = Screen()
-        self.words_list = ['клоун']
-        self.word = random.choice(self.words_list)
-        self.alphabet = 'йцукенгшщзхъфывапролджэячсмитьбю'
+        self.word = random.choice(open("data", encoding='utf8').read().split('\n'))
+        self.alphabet = 'йцукенгшщзхъфывапролджэячсмитьбюё'
         self.index = 0
+        print(self.word)
 
         self.row_ind = 1
 
