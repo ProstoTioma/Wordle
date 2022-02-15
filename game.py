@@ -9,7 +9,7 @@ class Game:
         self.word = random.choice(open("data", encoding='utf8').read().split('\n'))
         self.alphabet = 'йцукенгшщзхъфывапролджэячсмитьбюё'
         self.index = 0
-        print(self.word)
+        # print(self.word)
 
         self.row_ind = 1
 
@@ -63,6 +63,12 @@ class Game:
                         if s.lower() in open("data", encoding='utf8').read().split('\n'):
                             self.check_word()
                             self.row_ind += 1
+                            if self.row_ind == 7:
+                                font = pygame.font.Font('futur.ttf', int(self.screen.sq_size // 2))
+                                word = font.render(f'{self.word}', True, (255, 255, 255), self.screen.bg)
+                                word_rect = word.get_rect()
+                                word_rect.center = (self.screen.width // 2, self.screen.height // 2)
+                                self.screen.screen.blit(word, word_rect)
 
             pygame.display.flip()
 
@@ -74,12 +80,22 @@ class Game:
             self.screen.screen.blit(let, letter_rect)
 
     def check_word(self):
+        count = dict()
+        for j in range(5):
+            n = self.word.upper().count(self.letters[j + 5 * (self.row_ind - 1)][0])
+            count.update({self.letters[j + 5 * (self.row_ind - 1)][0]: n})
+
         for i in range(5):
             if self.letters[i + 5 * (self.row_ind - 1)][0] == self.word[i].upper():
-                rect = self.screen.field_squares[i + 5 * (self.row_ind - 1)]
-                pygame.draw.rect(self.screen.screen, (0, 255, 0), rect, 2, 50)
-                pygame.display.flip()
+                if count[self.letters[i + 5 * (self.row_ind - 1)][0]] > 0:
+                    rect = self.screen.field_squares[i + 5 * (self.row_ind - 1)]
+                    pygame.draw.rect(self.screen.screen, (0, 255, 0), rect, 2, 50)
+                    pygame.display.flip()
+                    count[self.letters[i + 5 * (self.row_ind - 1)][0]] -= 1
+
             elif self.letters[i + 5 * (self.row_ind - 1)][0] in self.word.upper():
-                rect = self.screen.field_squares[i + 5 * (self.row_ind - 1)]
-                pygame.draw.rect(self.screen.screen, (220, 197, 31), rect, 2, 50)
-                pygame.display.flip()
+                if count[self.letters[i + 5 * (self.row_ind - 1)][0]] > 0:
+                    rect = self.screen.field_squares[i + 5 * (self.row_ind - 1)]
+                    pygame.draw.rect(self.screen.screen, (220, 197, 31), rect, 2, 50)
+                    pygame.display.flip()
+                    count[self.letters[i + 5 * (self.row_ind - 1)][0]] -= 1
